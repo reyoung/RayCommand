@@ -1,0 +1,31 @@
+#ifndef BASECRT_INLINEASM_H
+#define BASECRT_INLINEASM_H
+#include <stdint.h>
+
+#define outb(Port,Value)\
+	__asm("outb %%al,%%dx;"::"d"(Port),"a"(Value))
+
+#define outw(Port,Value)\
+	__asm("outw %%ax,%%dx;"::"d"(Port),"a"(Value))
+
+static inline
+unsigned char inb( unsigned short port )
+{
+    unsigned char ret;
+    __asm__ volatile( "inb %1, %0"
+                  : "=a"(ret) : "Nd"(port) );
+    return ret;
+}
+
+static inline 
+uint16_t inw(uint16_t port){
+	uint16_t ret;
+	__asm__ volatile("inw %1, %0":
+			"=a"(ret):
+			"Nd"(port));
+		return ret;
+}
+
+
+
+#endif

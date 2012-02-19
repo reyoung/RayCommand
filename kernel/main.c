@@ -7,7 +7,5 @@ void kmain(void* mbd,unsigned int magic){
 
 	DRIVER_CONSOLE_Init(0xb8000,True);
 
-	unsigned char *videoram = (unsigned char *) 0xb8000;
-	videoram[0] = 65; /* character 'A' */
-	videoram[1] = 0x07; /* light grey (7) on black (0). */
+	DRIVER_CONSOLE_PutString("Hello world!\r\n");
 }

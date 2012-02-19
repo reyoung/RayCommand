@@ -10,4 +10,4 @@ all:
 clean:
 	$(MAKE) -C kernel clean
 run:all
-	qemu.exe -kernel bin/kernel.bin
+	$(MAKE) -C kernel run

@@ -1,11 +1,11 @@
 CC=i586-elf-gcc -std=c99
-CFLAGS=-Wall -nostdlib -fno-builtin -nostartfiles -nodefaultlibs -c
+CFLAGS=-Wall -nostdlib -fno-builtin -nostartfiles -nodefaultlibs -c -Ibasecrt
 LD=i586-elf-ld
 LFLAGS=-T linker.ld
 AS=nasm
 AS_FLAG= -f elf
 ASM_SOURCE_FILES=$(wildcard *.S)
-C_SOURCE_FILES=$(wildcard *.c)
+C_SOURCE_FILES=$(wildcard *.c) $(wildcard driver/console/*.c)
 OBJS=$(patsubst %.c,%.o,$(C_SOURCE_FILES)) $(patsubst %.S,%.o,$(ASM_SOURCE_FILES))
 
 

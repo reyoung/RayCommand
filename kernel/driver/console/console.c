@@ -9,7 +9,7 @@ static uint16_t Y=0;
 #define COLUMN_COUNT 80
 
 
-static inline void __UpdateCursorPosition(){
+static void __UpdateCursorPosition(){
 	uint16_t pos = (Y*80)+X;
 	outb(0x3D4,0x0F);
 	outb(0x3D5,(uint8_t)(pos&0xFF));

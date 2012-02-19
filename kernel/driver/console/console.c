@@ -1,7 +1,7 @@
 #include "console.h"
 #include <InlineAsm.h>
 static uint8_t Color = 0x07;
-static char* VideoRam = 0xb8000;
+static char* VideoRam = (char *)0xb8000;
 static uint16_t X=0;
 static uint16_t Y=0;
 
@@ -99,9 +99,35 @@ void DRIVER_CONSOLE_PutString(const char* str){
 }
 
 void DRIVER_CONSOLE_PutStringWithColor(const char* str, uint16_t color){
-	char* temp = str;
+	const char* temp = str;
 	while(*temp){
 		DRIVER_CONSOLE_PutCharWithColor(*temp,color);
 		++temp;
 	}
 }
+
+void DRIVER_CONSOLE_SetColor(uint8_t color){
+	Color = color;
+}
+
+uint16_t DRIVER_CONSOLE_GetColor(){
+	return Color;
+}
+
+
+
+void DRIVER_CONSOLE_SetChar(char ch,int16_t x, int16_t y){
+	DRIVER_CONSOLE_SetCharWithColor(ch,x,y,Color);
+}
+
+void DRIVER_CONSOLE_SetCharWithColor(char ch, int16_t x,int16_t y, int8_t color){
+	if(DRIVER_CONSOLE_IsVideoMono()) {
+		VideoRam[y*80+x]=ch;
+	} else {
+		volatile uint16_t* where;
+		where=(uint16_t*)(VideoRam)+(y*80+x);
+		*where=ch| (((uint16_t)color)<<8);
+	}
+}
+
+

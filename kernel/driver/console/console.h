@@ -1,6 +1,7 @@
 #ifndef KERNEL_DRIVER_CONSOLE_CONSOLE_H
 #define KERNEL_DRIVER_CONSOLE_CONSOLE_H
-#include <stdint.h>
+
+#include <stdint.h>	//! For uint32_t, uint8_t, etc.
 
 //! 初始化Console
 //! \param video_ram_addr 当前控制台显存的初始地址

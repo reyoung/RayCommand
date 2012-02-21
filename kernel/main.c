@@ -1,5 +1,9 @@
 #include "driver/console/console.h"
 #include "driver/X86_arch/GDT.h"
+#include "driver/X86_arch/IDT.h"
+#include "driver/X86_arch/ISR.h"
+#include "driver/X86_arch/IRQ.h"
+#include <InlineAsm.h>
 //! 初始化工作
 static void Initialize();
 
@@ -9,16 +13,20 @@ static void InitializeConsole();
 //! Architecture Special Initialize
 static void InitializeArchitectureSpecials();
 
+
 void kmain(void* mbd,unsigned int magic){
 	if(magic != 0x2BADB002 ){
 		//! Handle Error
 	}
 
 	Initialize();
+	
 
 	DRIVER_CONSOLE_SetColor(0x0a);
 	DRIVER_CONSOLE_ClearScreen();
 	DRIVER_CONSOLE_PutString("Hello world!\r\n");
+	
+	for(;;);
 }
 
 
@@ -36,5 +44,8 @@ static void InitializeConsole(){
 }
 static void InitializeArchitectureSpecials(){
 	DRIVER_X86_SetupGDT();
+	IDTInstall();
+	IRQ_Init();
+
 }
 

@@ -29,6 +29,10 @@ uint16_t inw(uint16_t port){
 		return ret;
 }
 
+#define cli					__asm__ __volatile__ ("cli")
+#define sti					__asm__ __volatile__ ("sti")
+#define enter_critical_region			cli
+#define leave_critical_region			sti
 
 
 #endif

@@ -1,10 +1,13 @@
 #include "driver/console/console.h"
-
+#include "driver/X86_arch/GDT.h"
 //! 初始化工作
 static void Initialize();
 
 //! 控制台的初始化
 static void InitializeConsole();
+
+//! Architecture Special Initialize
+static void InitializeArchitectureSpecials();
 
 void kmain(void* mbd,unsigned int magic){
 	if(magic != 0x2BADB002 ){
@@ -20,6 +23,7 @@ void kmain(void* mbd,unsigned int magic){
 
 
 static void Initialize(){
+	InitializeArchitectureSpecials();
 	InitializeConsole();
 }
 
@@ -29,5 +33,8 @@ static void InitializeConsole(){
 	} else {
 		DRIVER_CONSOLE_Init(0xB8000,True);
 	}
+}
+static void InitializeArchitectureSpecials(){
+	DRIVER_X86_SetupGDT();
 }
 

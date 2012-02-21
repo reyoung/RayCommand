@@ -4,8 +4,8 @@ LD=i586-elf-ld
 LFLAGS=-T linker.ld
 AS=nasm
 AS_FLAG= -f elf
-ASM_SOURCE_FILES=$(wildcard *.S)
-C_SOURCE_FILES=$(wildcard *.c) $(wildcard driver/console/*.c)
+ASM_SOURCE_FILES=$(wildcard *.S) $(wildcard driver/X86_arch/*.S)
+C_SOURCE_FILES=$(wildcard *.c) $(wildcard driver/console/*.c) $(wildcard driver/X86_arch/*.c)
 OBJS=$(patsubst %.c,%.o,$(C_SOURCE_FILES)) $(patsubst %.S,%.o,$(ASM_SOURCE_FILES))
 
 

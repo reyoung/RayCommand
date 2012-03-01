@@ -17,9 +17,9 @@ struct DRIVER_X86_GDTPtr{
 	uint32_t base;
 } __attribute__((packed));
 
-struct DRIVER_X86_GDTEntry gdt[3];
+extern struct DRIVER_X86_GDTEntry gdt[3];
 
-struct DRIVER_X86_GDTPtr  gdt_pointer;
+extern struct DRIVER_X86_GDTPtr  gdt_pointer;
 
 extern void gdt_flush();
 

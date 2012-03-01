@@ -1,5 +1,10 @@
 #include "GDT.h"
 
+struct DRIVER_X86_GDTEntry gdt[3];
+
+struct DRIVER_X86_GDTPtr  gdt_pointer;
+
+
 /* Setup a descriptor in the Global Descriptor Table */
 static void gdt_set_gate(int num, unsigned long base, unsigned long limit, unsigned char access, unsigned char gran)
 {

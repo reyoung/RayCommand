@@ -13,7 +13,6 @@ run:kernel
 	qemu.exe -vga std -kernel ../bin/kernel.bin
 kernel: $(OBJS)
 	$(LD) $(LFLAGS) -o ../bin/kernel.bin $(OBJS)
-	i586-elf-strip.exe ../bin/kernel.bin
 clean:
 	rm ../bin/kernel.bin
 	rm $(OBJS)

@@ -1,5 +1,8 @@
 #include "driver/console/console.h"
 #include "driver/X86_arch/GDT.h"
+#include "driver/X86_arch/IDT.h"
+#include "driver/X86_arch/ISR.h"
+
 //! 初始化工作
 static void Initialize();
 
@@ -8,6 +11,12 @@ static void InitializeConsole();
 
 //! Architecture Special Initialize
 static void InitializeArchitectureSpecials();
+
+static void DivByZeroCallback(struct DRIVER_X86_InterruptRegs* reg){
+	DRIVER_CONSOLE_PutString("ISR Test Correct!\r\n");
+	for(;;);
+}
+
 
 void kmain(void* mbd,unsigned int magic){
 	if(magic != 0x2BADB002 ){
@@ -19,6 +28,10 @@ void kmain(void* mbd,unsigned int magic){
 	DRIVER_CONSOLE_SetColor(0x0a);
 	DRIVER_CONSOLE_ClearScreen();
 	DRIVER_CONSOLE_PutString("Hello world!\r\n");
+	DRIVER_X86_InstallISRCallback(0,DivByZeroCallback);
+
+	int a=0;
+	a/=a;
 }
 
 
@@ -36,5 +49,6 @@ static void InitializeConsole(){
 }
 static void InitializeArchitectureSpecials(){
 	DRIVER_X86_SetupGDT();
+	DRIVER_X86_SetupIDT();
 }
 

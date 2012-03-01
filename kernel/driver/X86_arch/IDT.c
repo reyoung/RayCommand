@@ -22,6 +22,10 @@ void lidt( void * base, unsigned int size )
          : : "p"(((char *) i)+2) );
 }
 
+extern void _isr0();
+
 void DRIVER_X86_SetupIDT(){
+	idt_set_gate(0,(uint32_t)_isr0,0x08,0x8E);
+
 	lidt(&idt,(sizeof (struct DRIVER_X86_IDTEntry) * 256) - 1);
 }
